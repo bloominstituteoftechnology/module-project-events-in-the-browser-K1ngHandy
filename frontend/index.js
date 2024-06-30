@@ -38,8 +38,8 @@ function moduleProject2() {
       square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
         document.querySelector('.targeted').className = 'square';
-        event.target.classList.add('targeted');
         event.stopPropagation();
+        event.currentTarget.classList.add('targeted');
       })
     }
   }
