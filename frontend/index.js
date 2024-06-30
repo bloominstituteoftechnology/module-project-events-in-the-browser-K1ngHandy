@@ -37,8 +37,8 @@ function moduleProject2() {
       row.appendChild(square)
       square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
-        document.querySelector('.targeted').className = 'square';
-        event.stopPropagation();
+        document.querySelector('.targeted').className = 'square'; // remove previous target
+        event.stopPropagation(); // prevent mosquito img propagation
         event.currentTarget.classList.add('targeted');
       })
     }
@@ -68,6 +68,7 @@ function moduleProject2() {
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
+      console.log(evt.key);
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 
