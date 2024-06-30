@@ -35,8 +35,11 @@ function moduleProject2() {
       let square = document.createElement('div')
       square.classList.add('square')
       row.appendChild(square)
-      square.addEventListener('click', () => {
+      square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
+        document.querySelector('.targeted').className = 'square';
+        event.target.classList.add('targeted');
+        event.stopPropagation();
       })
     }
   }
