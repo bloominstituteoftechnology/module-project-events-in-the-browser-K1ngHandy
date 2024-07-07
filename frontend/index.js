@@ -68,25 +68,34 @@ function moduleProject2() {
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
-      if (evt.key === keys.down) {
-        console.log(true);
-      } else if (evt.key === keys.left) {
-        console.log(true);
-      } else if (evt.key === keys.right) {
-        console.log(true);
-      } else if (evt.key === keys.up) {
-        console.log(true);
-      } else {
-        console.log(false);
-      }
+    // if (evt.key === keys.down) {
+    //   console.log(true);
+    // } else if (evt.key === keys.left) {
+    //   console.log(true);
+    // } else if (evt.key === keys.right) {
+    //   console.log(true);
+    // } else if (evt.key === keys.up) {
+    //   console.log(true);
+    // } else {
+    //   console.log(false);
+    // }
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
     if (evt.key === keys.space) {
-      undefined
-    }
+      allSquares.forEach(square => {
+        let image = square.querySelector('img');
+
+        if (square.classList.contains('targeted') && image) {
+          console.log('Target', square);
+          square.
+        } else {
+          console.log('Try again');
+        }
+      });
+    };
 
     // 👉 TASK 5 - End the game 👈
-  })
+  });
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
