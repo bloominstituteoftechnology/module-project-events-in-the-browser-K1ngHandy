@@ -82,17 +82,15 @@ function moduleProject2() {
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
     if (evt.key === keys.space) {
-      allSquares.forEach(square => {
-        let image = square.querySelector('img');
+      const targeted = document.querySelector('.targeted');
+      const image = targeted.querySelector('img');
 
-        if (square.classList.contains('targeted') && image) {
-          console.log('Target', square);
-          square.
-        } else {
-          console.log('Try again');
-        }
-      });
-    };
+      if (targeted && image) {
+        targeted.firstChild.dataset.status = 'dead'
+        targeted.style.backgroundColor = 'red';
+        console.log(targeted.firstChild.dataset.status);
+      }
+    }
 
     // 👉 TASK 5 - End the game 👈
   });
