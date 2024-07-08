@@ -68,31 +68,44 @@ function moduleProject2() {
 
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
-    // if (evt.key === keys.down) {
-    //   console.log(true);
-    // } else if (evt.key === keys.left) {
-    //   console.log(true);
-    // } else if (evt.key === keys.right) {
-    //   console.log(true);
-    // } else if (evt.key === keys.up) {
-    //   console.log(true);
-    // } else {
-    //   console.log(false);
-    // }
+    const squares = document.querySelectorAll('.square');
+    let targeted = document.querySelector('.targeted');
+    let index = Array.from(squares).indexOf(targeted);
+    let newIndex;
+    const remove = targeted.classList.remove('targeted');
+    const add = squares[newIndex].classList.add('targeted');
+    console.log(index);
+    
+    if (evt.key === keys.down) {
+      newIndex = index + 5;
+
+      if (newIndex < squares.length) {
+        remove;
+        add;
+      }
+    }
+    else if (evt.key === keys.left) {
+      newIndex = index - 1;
+
+      if (newIndex >= 0 && Math.floor(newIndex / 5) === Math.floor(index / 5)) {
+        remove;
+        add;
+      }
+    }
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
     if (evt.key === keys.space) {
-      const targeted = document.querySelector('.targeted');
       const image = targeted.querySelector('img');
+      // targeted const from previous task
 
       if (targeted && image) {
         targeted.firstChild.dataset.status = 'dead'
         targeted.style.backgroundColor = 'red';
-        console.log(targeted.firstChild.dataset.status);
       }
     }
 
     // 👉 TASK 5 - End the game 👈
+    
   });
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
