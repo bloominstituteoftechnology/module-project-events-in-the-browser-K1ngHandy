@@ -66,41 +66,48 @@ function moduleProject2() {
     allSquares[randomInt].appendChild(mosquito)
   })
 
+  const getTarget = () => { // get targeted square & indices
+    const targeted = document.querySelector('.targeted');
+    const rows = Array.from(document.querySelectorAll('.row'));
+    const rowIndex = rows.findIndex(row => Array.from(row.children).includes(targeted));
+    const colIndex = Array.from(rows[rowIndex].children).indexOf(targeted);
+    return { rowIndex, colIndex };
+  }
+
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
-    const squares = document.querySelectorAll('.square');
-    let targeted = document.querySelector('.targeted');
-    let index = Array.from(squares).indexOf(targeted);
-    let newIndex;
-    const remove = targeted.classList.remove('targeted');
-    const add = squares[newIndex].classList.add('targeted');
-    console.log(index);
-    
-    if (evt.key === keys.down) {
-      newIndex = index + 5;
+    let { rowIndex, colIndex } = getTarget();
+    const rows = 5;
+    const cols = 5;
 
-      if (newIndex < squares.length) {
-        remove;
-        add;
-      }
+    switch(evt.key) {
+      case keys.up:
+        rowIndex = Math.max(0, rowIndex - 1);
+        break;
+      case keys.down:
+        rowIndex = Math.min(rows - 1, rowIndex + 1);
+        break;
+      case keys.left:
+        colIndex = Math.max(0, colIndex - 1);
+        break;
+      case keys.right:
+        colIndex = Math.min(cols - 1, colIndex + 1);
+        break;
     }
-    else if (evt.key === keys.left) {
-      newIndex = index - 1;
 
-      if (newIndex >= 0 && Math.floor(newIndex / 5) === Math.floor(index / 5)) {
-        remove;
-        add;
-      }
-    }
+    document.querySelector('.targeted').classList.remove('targeted'); // remove previous target
+    document.querySelector('.row:nth-child(' + (rowIndex + 1) + ')').children[colIndex].classList.add('targeted'); // set new target
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
     if (evt.key === keys.space) {
+      const targeted = document.querySelector('.targeted');
       const image = targeted.querySelector('img');
       // targeted const from previous task
 
-      if (targeted && image) {
-        targeted.firstChild.dataset.status = 'dead'
+      if (image) {
+        image.dataset.status = 'dead'
         targeted.style.backgroundColor = 'red';
+        console.log(Array.from(document.querySelectorAll('img')).filter(img => img.dataset.status === 'alive').length); // num of mosquitos remaining
       }
     }
 
