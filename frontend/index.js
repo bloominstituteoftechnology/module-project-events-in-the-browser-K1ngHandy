@@ -107,12 +107,27 @@ function moduleProject2() {
       if (image) {
         image.dataset.status = 'dead'
         targeted.style.backgroundColor = 'red';
-        console.log(Array.from(document.querySelectorAll('img')).filter(img => img.dataset.status === 'alive').length); // num of mosquitos remaining
       }
     }
 
     // 👉 TASK 5 - End the game 👈
-    
+    const remaining = Array.from(document.querySelectorAll('img')).filter(img => img.dataset.status === 'alive').length; // num of mosquitos remaining
+    let count = remaining;
+    let startTime = getTimeElapsed();
+
+    while (count >= 0) {
+      let timeElapsed = getTimeElapsed() - startTime;
+      if (timeElapsed >= count) {
+        if (count === 0) {
+          document.querySelector('p').innerText = `Extermination completed in ${timeElapsed} seconds!`;
+        } else {
+          document.querySelector('p').innerText = `${remaining} Mosquitoes remaining`;
+          console.log(remaining);
+        }
+        count--;
+        startTime = timeElapsed();
+      }
+    }
   });
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
