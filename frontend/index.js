@@ -114,9 +114,29 @@ function moduleProject2() {
     const remaining = Array.from(document.querySelectorAll('img')).filter(img => img.dataset.status === 'alive').length; // num of mosquitos remaining
     let count = remaining;
 
+    const createButton = () => {
+      let button = document.createElement('button');
+      button.textContent = "Reset Game";
+      button.id = 'reset';
+      button.style.marginBottom = '30px';
+      button.style.marginTop = '0';
+      return button;
+    }
+
+    const focus = (button) => {
+      button.focus();
+    }
+
     if (count === 0) {
       let timeElapsed = Math.floor(getTimeElapsed() / 1000);
       document.querySelector('p').innerText = `Extermination completed in ${timeElapsed} seconds!`;
+      
+      if (!document.querySelector('#reset')) {
+        document.querySelector('section').appendChild(createButton());
+        setTimeout(() => {
+          focus(document.querySelector('#reset'))
+        }, 450);
+      }
     } else {
       document.querySelector('p').innerText = `${remaining} Mosquitoes remaining`;
     }
