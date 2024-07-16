@@ -35,8 +35,11 @@ function moduleProject2() {
       let square = document.createElement('div')
       square.classList.add('square')
       row.appendChild(square)
-      square.addEventListener('click', () => {
+      square.addEventListener('click', (event) => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
+        document.querySelector('.targeted').className = 'square'; // remove previous target
+        event.stopPropagation(); // prevent mosquito img propagation
+        event.currentTarget.classList.add('targeted');
       })
     }
   }
@@ -63,13 +66,81 @@ function moduleProject2() {
     allSquares[randomInt].appendChild(mosquito)
   })
 
+  const getTarget = () => { // get targeted square & indices
+    const targeted = document.querySelector('.targeted');
+    const rows = Array.from(document.querySelectorAll('.row'));
+    const rowIndex = rows.findIndex(row => Array.from(row.children).includes(targeted));
+    const colIndex = Array.from(rows[rowIndex].children).indexOf(targeted);
+    return { rowIndex, colIndex };
+  }
+
   document.addEventListener('keydown', evt => {
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
+    let { rowIndex, colIndex } = getTarget();
+    const rows = 5;
+    const cols = 5;
+
+    switch(evt.key) {
+      case keys.up:
+        rowIndex = Math.max(0, rowIndex - 1);
+        break;
+      case keys.down:
+        rowIndex = Math.min(rows - 1, rowIndex + 1);
+        break;
+      case keys.left:
+        colIndex = Math.max(0, colIndex - 1);
+        break;
+      case keys.right:
+        colIndex = Math.min(cols - 1, colIndex + 1);
+        break;
+    }
+
+    document.querySelector('.targeted').classList.remove('targeted'); // remove previous target
+    document.querySelector('.row:nth-child(' + (rowIndex + 1) + ')').children[colIndex].classList.add('targeted'); // set new target
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+    if (evt.key === keys.space) {
+      const targeted = document.querySelector('.targeted');
+      const image = targeted.querySelector('img');
+      // targeted const from previous task
+
+      if (image) {
+        image.dataset.status = 'dead'
+        targeted.style.backgroundColor = 'red';
+      }
+    }
 
     // 👉 TASK 5 - End the game 👈
-  })
+    const remaining = Array.from(document.querySelectorAll('img')).filter(img => img.dataset.status === 'alive').length; // num of mosquitos remaining
+    let count = remaining;
+
+    const createButton = () => {
+      let button = document.createElement('button');
+      button.textContent = "Reset Game";
+      button.id = 'reset';
+      button.style.marginBottom = '30px';
+      button.style.marginTop = '0';
+      return button;
+    }
+
+    const focus = (button) => {
+      button.focus();
+    }
+
+    if (count === 0) {
+      let timeElapsed = Math.floor(getTimeElapsed() / 1000);
+      document.querySelector('p').innerText = `Extermination completed in ${timeElapsed} seconds!`;
+      
+      if (!document.querySelector('#reset')) {
+        document.querySelector('section').appendChild(createButton());
+        setTimeout(() => {
+          focus(document.querySelector('#reset'))
+        }, 450);
+      }
+    } else {
+      document.querySelector('p').innerText = `${remaining} Mosquitoes remaining`;
+    }
+  });
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
 
